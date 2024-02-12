@@ -1,0 +1,1555 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "REST API Hotel Campestre",
+        "description": "<html><body>Esta es la documentación de la API para el sistema de Investigación Docencia.</body></html>",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "Cuentas",
+            "description": "API para obtener informacion de los usuarios."
+        },
+        {
+            "name": "Habitaciones",
+            "description": "API para obtener informacion general de las habitaciones."
+        },
+        {
+            "name": "Roles",
+            "description": "API para obtener informacion de los roles."
+        },
+        {
+            "name": "Reservaciones",
+            "description": "API para obtener informacion sobre las reservaciones."
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/cuenta/mostrar_todas_cuentas/": {
+            "get": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "summary": "Listado de todos los clientes con cuenta en la pagina WEB.",
+                "description": "<p>Este servcio retorna informacion detallada de cada uno de los usuarios.</p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDCuenta": 1,
+                                    "NombreCompleto": "Usuario1",
+                                    "CorreoElectronico": "Usuario1@gmail.com",
+                                    "Contrasena": "789*",
+                                    "NumeroTelefono": "123123458",
+                                    "Rol": "3"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Cuenta"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ]
+            }
+        },
+        "/api/cuenta/mostrar_cuenta/{id}": {
+            "get": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "summary": "Consulta Especifica de un usuario.",
+                "description": "<p>Este servcio retorna informacion detallada de un solo usuario.</p>",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del usuario",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDCuenta": 1,
+                                    "NombreCompleto": "Usuario1",
+                                    "CorreoElectronico": "Usuario1@gmail.com",
+                                    "contrasena": "789*",
+                                    "NumeroTelefono": "123123456",
+                                    "Rol": "1"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Cuenta"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/cuenta/crear_cuenta/": {
+            "post": {
+                "summary": "Crear una cuenta nueva.",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "cuenta",
+                        "in": "body",
+                        "description": "Cuenta creada,",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CuentaNueva"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "tags": [
+                    "Cuentas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cuenta creada con éxito."
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                }
+            }
+        },
+        "/api/cuenta/actualizar_cuenta/{id}": {
+            "put": {
+                "summary": "Actualizar la información de la cuenta.",
+                "description": "<p>Servicio que permite editar la información de una cuenta por medio del ID de la misma.</p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Identificador de la cuenta",
+                        "type": "number",
+                        "default": "2"
+                    },
+                    {
+                        "name": "cuenta",
+                        "in": "body",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CuentaNueva"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "tags": [
+                    "Cuentas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/cuenta/eliminar_cuenta/{id}": {
+            "delete": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "summary": "Eliminar la cuenta del usuario por medio de su ID.",
+                "description": "<p>Servicio que elimina el una cuenta usuario por medio de su ID.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Identificador del usuario.",
+                        "type": "number",
+                        "default": "5"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ]
+            }
+        },
+        "/api/cuenta/validar_cuenta/": {
+            "post": {
+                "tags": [
+                    "Cuentas"
+                ],
+                "summary": "Consulta que permite iniciar sesión.",
+                "description": "<p>Este servicio recibe como parámetros el correo y la contraseña del usuario, para que el usuario pueda iniciar sesión en su cuenta.</p>",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Cuenta validada.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InicioSesion"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDCuenta": 1,
+                                    "NombreCompleto": "Usuario1",
+                                    "CorreoElectronico": "Usuario1@gmail.com",
+                                    "contrasena": "789*",
+                                    "NumeroTelefono": "123123456",
+                                    "Rol": "1"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Cuenta"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/roles/mostrarTodosRoles/": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Listado de todos los roles permitidos.",
+                "description": "<p>Este servcio retorna toda la información de todos los roles.</p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDRol": 1,
+                                    "NombreRol": "Administrador"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Roles"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                },
+                "parameters": [
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ]
+            }
+        },
+        "/api/roles/crearRol/": {
+            "post": {
+                "summary": "Agregar un nuevo rol.",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Roles",
+                        "in": "body",
+                        "description": "Para agregar un Rol, unicamente se recibe el nombre del nuevo Rol.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoRol"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "tags": [
+                    "Roles"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rol agregado con éxito."
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                }
+            }
+        },
+        "/api/roles/eliminarRol/{id}": {
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Eliminar un Rol por medio de su ID.",
+                "description": "<p>Servicio que elimina un Rol por medio de su ID.",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Identificador del Rol.",
+                        "type": "number",
+                        "default": "5"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ]
+            }
+        },
+        "/api/roles/actualizarRol/{id}": {
+            "put": {
+                "summary": "Actualizar informacion de Roles",
+                "description": "<p>Servicio que permite editar la información de un Rol por medio del ID de la misma.</p>",
+                "operationId": "update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Identificador de la cuenta",
+                        "type": "number",
+                        "default": "5"
+                    },
+                    {
+                        "name": "roles",
+                        "in": "body",
+                        "description": "Datos a modificar del Rol.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoRol"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "tags": [
+                    "Roles"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/habitaciones/mostrar_todas_habitaciones": {
+            "get": {
+                "tags": [
+                    "Habitaciones"
+                ],
+                "summary": "Obtener todas las habitaciones",
+                "responses": {
+                    "200": {
+                        "description": "Éxito",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Habitaciones"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ]
+            }
+        },
+        "/api/habitaciones/total_habitaciones/": {
+            "get": {
+                "tags": [
+                    "Habitaciones"
+                ],
+                "summary": "Obtener el total de habitaciones del hotel.",
+                "responses": {
+                    "200": {
+                        "description": "Éxito",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/TotalHabitaciones"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ]
+            }
+        },
+        "/api/habitaciones/crear_habitacion": {
+            "post": {
+                "tags": [
+                    "Habitaciones"
+                ],
+                "summary": "Crear una nueva habitación",
+                "parameters": [
+                    {
+                        "name": "habitacion",
+                        "in": "body",
+                        "description": "Habitación a crear",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaHabitacion"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Habitación creada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/habitaciones/mostrar_habitacion/{id}": {
+            "get": {
+                "tags": [
+                    "Habitaciones"
+                ],
+                "summary": "Obtener una habitación por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la habitación",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Éxito",
+                        "schema": {
+                            "$ref": "#/definitions/Habitaciones"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/habitaciones/actualizar_habitacion/{id}": {
+            "put": {
+                "tags": [
+                    "Habitaciones"
+                ],
+                "summary": "Actualizar una habitación por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la habitación",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "habitacion",
+                        "in": "body",
+                        "description": "Habitación actualizada",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaHabitacion"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Habitación actualizada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/habitaciones/eliminar_habitacion/{id}": {
+            "delete": {
+                "tags": [
+                    "Habitaciones"
+                ],
+                "summary": "Eliminar una habitación por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la habitación",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Habitación eliminada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/disponibilidadporfecha/mostrar_disponibilidad_fecha/{fecha}": {
+            "get": {
+                "tags": [
+                    "Disponibilidad por Fecha"
+                ],
+                "summary": "Mostrar disponibilidad de todos los tipos de habitaciones en cierta fecha.",
+                "parameters": [
+                    {
+                        "name": "fecha",
+                        "in": "path",
+                        "description": "Fecha(AA-MM-DD)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Éxito",
+                        "schema": {
+                            "$ref": "#/definitions/DisponibilidadporFecha"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/DisponibilidadporFecha/agregar_disponibilidad/": {
+            "post": {
+                "tags": [
+                    "Disponibilidad por Fecha"
+                ],
+                "summary": "Agregar disponibilidad por fecha.",
+                "parameters": [
+                    {
+                        "name": "disponibilidadporfecha",
+                        "in": "body",
+                        "description": "Tipo de habitacion, fecha y cantidad de habitaciones disponibles para tal fecha.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaDisponibilidadporFecha"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Actualización de disponibilidad con éxito."
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/mostrar_habitaciones_disponibles_rango_fecha/": {
+            "post": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Listado de todas las habitaciones disponibles para un rango de fechas.",
+                "description": "<p>Este servicio retorna todas las habitaciones disponibles con entrada en el rango de fechas dado.</p>",
+                "parameters": [
+                    {
+                        "name": "Reservaciones.",
+                        "in": "body",
+                        "description": "Mostrar habitaciones en un rengo de fecha dados.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ReservacionRangoFechas"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDReserva": "12",
+                                    "IDCuenta": "1",
+                                    "FechaEntrada": "2023-12-01",
+                                    "FechaSalida": "2023-12-02",
+                                    "HoraLlegada": "12:00:00",
+                                    "EstadoReserva": "Pendiente"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Habitaciones"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/mostrar_reservaciones_por_fecha/{fecha}": {
+            "get": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Listado de todas las reservaciones para una fecha dada.",
+                "description": "<p>Este servcio retorna todas las reservaciones con entrada en la fecha consultada.</p>",
+                "parameters": [
+                    {
+                        "name": "fecha",
+                        "in": "path",
+                        "description": "Fecha(AA-MM-DD)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDReserva": "12",
+                                    "IDCuenta": "1",
+                                    "FechaEntrada": "2023-12-01",
+                                    "FechaSalida": "2023-12-02",
+                                    "HoraLlegada": "12:00:00",
+                                    "EstadoReserva": "Pendiente"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Reservaciones"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/rellenar_datos_tabla/{fecha}": {
+            "get": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Listado de todas las reservaciones para una fecha dada.",
+                "description": "<p>Este servcio retorna todas las reservaciones con entrada en la fecha consultada.</p>",
+                "parameters": [
+                    {
+                        "name": "fecha",
+                        "in": "path",
+                        "description": "Fecha(AA-MM-DD)",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDReserva": "12",
+                                    "IDCuenta": "1",
+                                    "FechaEntrada": "2023-12-01",
+                                    "FechaSalida": "2023-12-02",
+                                    "HoraLlegada": "12:00:00",
+                                    "EstadoReserva": "Pendiente"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Reservaciones"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/mostrar_reservaciones_por_rango_fecha/": {
+            "post": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Listado de todas las reservaciones para un rango de fechas.",
+                "description": "<p>Este servcio retorna todas las reservaciones con entrada en el rango de fechas dado.</p>",
+                "parameters": [
+                    {
+                        "name": "Reservaciones.",
+                        "in": "body",
+                        "description": "Mostrar habitaciones en un rengo de fecha dados.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ReservacionRangoFechas"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDReserva": "12",
+                                    "IDCuenta": "1",
+                                    "FechaEntrada": "2023-12-01",
+                                    "FechaSalida": "2023-12-02",
+                                    "HoraLlegada": "12:00:00",
+                                    "EstadoReserva": "Pendiente"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Reservaciones"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/hacer_reservacion/": {
+            "post": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Hacer una nueva reservacion.",
+                "parameters": [
+                    {
+                        "name": "reservacion",
+                        "in": "body",
+                        "description": "Datos de la reservacion.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaReservacion"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Reservacion creada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/modificar_reservacion/{id}": {
+            "put": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Modificar una reservación",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la reservación.",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "reservacion",
+                        "in": "body",
+                        "description": "Reservación modificada.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ModificarReservacion"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reservación actualizada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/modificar_estado_reserva/{id}": {
+            "put": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Actualizar el estado de una reservación.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la reservación.",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "reservaciones",
+                        "in": "body",
+                        "description": "Estado de la habitacion actualizada.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/EstadoReserva"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estado de reserva actualizada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/modificar_estado_pago/{id}": {
+            "put": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Actualizar el estado del pago de una reservación.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la reservación.",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "reservaciones",
+                        "in": "body",
+                        "description": "Estado del pago de la habitacion actualizada.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/EstadoPago"
+                        }
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estado del pago de la reserva actualizada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/cancelar_reservacion/{id}": {
+            "delete": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Cancelar una reservación por medio de su ID de reserva.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de reserva",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Reservacion cancelada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/hacer_reservacion_2/": {
+            "post": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Hacer una nueva reservacion.",
+                "parameters": [
+                    {
+                        "name": "reservacion",
+                        "in": "body",
+                        "description": "Datos de la reservacion.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaReservacion_2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Reservacion creada con éxito"
+                    }
+                }
+            }
+        },
+        "/api/reservaciones/tabla_reservas/{fecha}": {
+            "get": {
+                "tags": [
+                    "Reservaciones"
+                ],
+                "summary": "Esta consulta retorna las reservas para una fecha.",
+                "description": "<p>Este servicio retorna lo necesario para mostrar las reservaciones por día.</p>",
+                "parameters": [
+                    {
+                        "name": "fecha",
+                        "in": "path",
+                        "description": "Fecha(AA-MM-DD)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "IDReserva": "12",
+                                    "IDCuenta": "1",
+                                    "FechaEntrada": "2023-12-01",
+                                    "FechaSalida": "2023-12-02",
+                                    "HoraLlegada": "12:00:00",
+                                    "EstadoReserva": "Pendiente"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Datos_Tabla"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Datos_Tabla": {
+            "type": "object",
+            "properties": {
+                "IDCuenta": {
+                    "type": "integer",
+                    "description": "ID de la cuenta del cliente que realiza la reservación"
+                },
+                "IDReserva": {
+                    "type": "integer",
+                    "description": "ID de la reservación del cliente."
+                },
+                "NombreCompleto": {
+                    "type": "string",
+                    "description": "Nombre de cliente."
+                },
+                "NumeroTelefono": {
+                    "type": "string",
+                    "description": "Número telefónico del cliente."
+                },
+                "HoraLlegada": {
+                    "type": "string",
+                    "format": "time",
+                    "description": "Hora de llegada para la reservación (HH:MM:SS)"
+                },
+                "FechaEntrada": {
+                    "type": "string",
+                    "description": "Día de llegada (AA-MM-DD)"
+                },
+                "FechaSalida": {
+                    "type": "string",
+                    "description": "Día de llegada (AA-MM-DD)"
+                },
+                "EstadoReserva": {
+                    "type": "string",
+                    "description": "Indica si la reservación ya fue aceptada, cancelada."
+                },
+                "EstadoPago": {
+                    "type": "string",
+                    "description": "Indica el estado del pago de la reservación."
+                }
+            }
+        },
+        "NuevaReservacion_2": {
+            "type": "object",
+            "properties": {
+                "IDCuenta": {
+                    "type": "integer",
+                    "description": "ID de la cuenta del cliente que realiza la reservación"
+                },
+                "FechaEntrada": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Fecha de entrada para la reservación (YYYY-MM-DD)"
+                },
+                "FechaSalida": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Fecha de salida para la reservación (YYYY-MM-DD)"
+                },
+                "HoraLlegada": {
+                    "type": "string",
+                    "format": "time",
+                    "description": "Hora de llegada para la reservación (HH:MM:SS)"
+                },
+                "detallesReserva": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/detallesReserva_2"
+                    },
+                    "description": "Detalles de las habitaciones reservadas"
+                }
+            }
+        },
+        "detallesReserva_2": {
+            "type": "object",
+            "properties": {
+                "IDHabitacion": {
+                    "type": "integer",
+                    "description": "ID de la habitación reservada"
+                },
+                "CantidadHabitaciones": {
+                    "type": "integer",
+                    "description": "Cantidad de habitaciones reservadas del tipo especificado"
+                }
+            },
+            "description": "Detalles de las habitaciones reservadas"
+        },
+        "Cuenta": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar la cuenta del usuario."
+                },
+                "CorreoElectronico": {
+                    "type": "string",
+                    "description": "Correo electronico del usuario."
+                },
+                "Contrasena": {
+                    "type": "string",
+                    "description": "Contrasena del usuario."
+                },
+                "Rol": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol de la cuenta."
+                },
+                "NombreCompleto": {
+                    "type": "string",
+                    "description": "Nombre completo del usuario."
+                },
+                "NumeroTelefono": {
+                    "type": "string",
+                    "description": "Numero de telefono del usuario."
+                }
+            }
+        },
+        "CuentaNueva": {
+            "type": "object",
+            "properties": {
+                "CorreoElectronico": {
+                    "type": "string",
+                    "description": "Correo electronico del usuario."
+                },
+                "Contrasena": {
+                    "type": "string",
+                    "description": "Contrasena del usuario."
+                },
+                "Rol": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar el rol de la cuenta."
+                },
+                "NombreCompleto": {
+                    "type": "string",
+                    "description": "Nombre completo del usuario."
+                },
+                "NumeroTelefono": {
+                    "type": "string",
+                    "description": "Numero de telefono del usuario."
+                }
+            }
+        },
+        "InicioSesion": {
+            "type": "object",
+            "properties": {
+                "CorreoElectronico": {
+                    "type": "string",
+                    "description": "Correo electronico del usuario."
+                },
+                "Contrasena": {
+                    "type": "string",
+                    "description": "Contrasena del usuario."
+                }
+            }
+        },
+        "Habitaciones": {
+            "type": "object",
+            "properties": {
+                "IDHabitacion": {
+                    "type": "number",
+                    "description": "Identificador del tipo de habitación."
+                },
+                "TipoHabitacion": {
+                    "type": "string",
+                    "description": "Atributo que indica el tipo de la habitación."
+                },
+                "MaxHuespedes": {
+                    "type": "number",
+                    "description": "Atributo que indica el máximo de huespedes por cada tipo de habitación."
+                },
+                "TotalTipoHabitacion": {
+                    "type": "number",
+                    "description": "Atributo que indica la cantidad de habitación con las que se cuenta en el hotel por cada tipo."
+                },
+                "Costo": {
+                    "type": "number",
+                    "description": "Atributo que indica el precio de la habitación por noche."
+                }
+            }
+        },
+        "TotalHabitaciones": {
+            "type": "object",
+            "properties": {
+                " TotalHabitaciones": {
+                    "type": "number",
+                    "description": "Indica el total de habitaciones que hay en el hotel."
+                }
+            }
+        },
+        "NuevaHabitacion": {
+            "type": "object",
+            "properties": {
+                "TipoHabitacion": {
+                    "type": "string",
+                    "description": "Atributo que indica el tipo de la habitación."
+                },
+                "MaxHuespedes": {
+                    "type": "number",
+                    "description": "Atributo que indica el máximo de huespedes por cada tipo de habitación."
+                },
+                "TotalTipoHabitacion": {
+                    "type": "number",
+                    "description": "Atributo que indica la cantidad de habitación con las que se cuenta en el hotel por cada tipo."
+                },
+                "Costo": {
+                    "type": "number",
+                    "description": "Atributo que indica el precio de la habitación por noche."
+                }
+            }
+        },
+        "Reservaciones": {
+            "type": "object",
+            "properties": {
+                "IDReserva": {
+                    "type": "number",
+                    "description": "Atributo indentificado único para cada reservación."
+                },
+                "IDCuenta": {
+                    "type": "number",
+                    "description": "Atributo que hace referencia al ID de la cuenta del cliente."
+                },
+                "FechaEntrada": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha check-in."
+                },
+                "FechaSalida": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha check-out."
+                },
+                "HoraLlegada": {
+                    "type": "date",
+                    "description": "Atributo que especifica la hora de llegada del cliente a su habitación."
+                },
+                "EstadoReserva": {
+                    "type": "string",
+                    "description": "Atributo que permite saber el estado de la reserva; puede ser 'Confirmada', 'Cancelada' o 'Pendiente' por default."
+                }
+            }
+        },
+        "ModificarReservacion": {
+            "type": "object",
+            "properties": {
+                "FechaEntrada": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha check-in."
+                },
+                "FechaSalida": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha check-out."
+                },
+                "HoraLlegada": {
+                    "type": "date",
+                    "description": "Atributo que especifica la hora de llegada del cliente a su habitación."
+                },
+                "EstadoReserva": {
+                    "type": "string",
+                    "description": "Atributo que permite saber el estado de la reserva; puede ser 'Confirmada', 'Cancelada' o 'Pendiente' por default."
+                }
+            }
+        },
+        "NuevaReservacion": {
+            "type": "object",
+            "properties": {
+                "IDCuenta": {
+                    "type": "number",
+                    "description": "Atributo que hace referencia al ID de la cuenta del cliente."
+                },
+                "FechaEntrada": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha check-in."
+                },
+                "FechaSalida": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha check-out."
+                },
+                "HoraLlegada": {
+                    "type": "string",
+                    "description": "Atributo que especifica la hora de llegada del cliente a su habitación."
+                },
+                "IDHabitacion": {
+                    "type": "number",
+                    "description": "Atributo que hace referencia al ID del tipo de habitación."
+                },
+                "CantidadHabitaciones": {
+                    "type": "integer",
+                    "description": "Este atributo especifica la cantidad de habitaciones que quiere reservar el usuario."
+                }
+            }
+        },
+        "Fecha_para_tabla": {
+            "type": "object",
+            "properties": {
+                "Fecha": {
+                    "type": "string",
+                    "description": "F."
+                }
+            }
+        },
+        "ReservacionRangoFechas": {
+            "type": "object",
+            "properties": {
+                "FechaUno": {
+                    "type": "string",
+                    "description": "Fecha uno para mostrar reservación por rango de fechas."
+                },
+                "FechaDos": {
+                    "type": "string",
+                    "description": "Fecha dos para mostrar reservación por rango de fechas."
+                }
+            }
+        },
+        "EstadoReserva": {
+            "type": "object",
+            "properties": {
+                "EstadoReserva": {
+                    "type": "string",
+                    "description": "Atributo que permite saber el estado de la reserva; puede ser 'Confirmada', 'Cancelada' o 'Pendiente' por default."
+                }
+            }
+        },
+        "EstadoPago": {
+            "type": "object",
+            "properties": {
+                "EstadoReserva": {
+                    "type": "string",
+                    "description": "Atributo que permite saber el estado del pago de la reservación; puede ser 'Pagada', o 'Pendiente' por default."
+                }
+            }
+        },
+        "DetallesReservacion": {
+            "type": "object",
+            "properties": {
+                "IDReservacion": {
+                    "type": "number",
+                    "description": "Atributo que hace referencia al ID de la habitación."
+                },
+                "IDHabitacion": {
+                    "type": "number",
+                    "description": "Atributo que hace referencia al ID del tipo de habitación."
+                },
+                "CantidadHabitaciones": {
+                    "type": "string",
+                    "description": "Atributo que expecifica la cantidad de habitaciones reservadas por el usuario."
+                }
+            }
+        },
+        "DisponibilidadporFecha": {
+            "type": "object",
+            "properties": {
+                "IDisponibilidad": {
+                    "type": "number",
+                    "description": "Identificador de disponibilidad para una sola fecha."
+                },
+                "IDTipoHabitacion": {
+                    "type": "number",
+                    "description": "Atributo que hace referencia al tipo de habitación."
+                },
+                "Fecha": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha tanto fechas pasadas, como fechas futuras."
+                },
+                "TotalHabitacionesDisponibles": {
+                    "type": "number",
+                    "description": "Atributo que especifica cuantas habitaciones hay disponibles para cierta fecha y de cierto tipo de habitación."
+                }
+            }
+        },
+        "NuevaDisponibilidadporFecha": {
+            "type": "object",
+            "properties": {
+                "IDTipoHabitacion": {
+                    "type": "number",
+                    "description": "Atributo que hace referencia al tipo de habitación."
+                },
+                "Fecha": {
+                    "type": "string",
+                    "description": "Atributo que especifica la fecha tanto fechas pasadas, como fechas futuras."
+                },
+                "TotalHabitacionesDisponibles": {
+                    "type": "number",
+                    "description": "Atributo que especifica cuantas habitaciones hay disponibles para cierta fecha y de cierto tipo de habitación."
+                }
+            }
+        },
+        "Roles": {
+            "type": "object",
+            "properties": {
+                "IDRol": {
+                    "type": "int",
+                    "description": "Codigo que permite identificar al rol"
+                },
+                "NombreRol": {
+                    "type": "string",
+                    "description": "Nombre del rol; puede ser 'administrador', 'Recepcionista' ó 'cliente'"
+                }
+            }
+        },
+        "NuevoRol": {
+            "type": "object",
+            "properties": {
+                "NombreRol": {
+                    "type": "string",
+                    "description": "Nombre del rol; puede ser 'administrador', 'Recepcionista' ó 'cliente'"
+                }
+            }
+        }
+    }
+}
